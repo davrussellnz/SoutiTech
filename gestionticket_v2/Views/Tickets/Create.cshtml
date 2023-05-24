@@ -1,0 +1,27 @@
+﻿@model gestionticket_v2.Models.Ticket
+
+<h2>Create Ticket</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Titre"></label>
+        <input asp-for="Titre" class="form-control" />
+        <span asp-validation-for="Titre" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Priorite"></label>
+        <select asp-for="PrioriteId" asp-items="ViewBag.PrioriteId" class="form-control"></select>
+        <span asp-validation-for="PrioriteId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Categorie"></label>
+        <select asp-for="CategorieId" asp-items="ViewBag.CategorieId" class="form-control"></select>
+        <span asp-validation-for="CategorieId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

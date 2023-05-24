@@ -1,0 +1,24 @@
+﻿
+<h2>Register</h2>
+
+<form method="post" asp-controller="Home" asp-action="Register">
+    <label for="nom">Nom:</label>
+    <input type="text" id="nom" name="Nom" />
+
+    <label for="prenom">Prenom:</label>
+    <input type="text" id="prenom" name="Prenom" />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="Email" />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="Password" />
+
+    <label for="userType">User Type:</label>
+    <select id="userType" name="UserType">
+        <option value="Client">Client</option>
+        <option value="MembreSupportTechnique">Membre Support Technique</option>
+    </select>
+
+    <input type="submit" value="Register" />
+</form>

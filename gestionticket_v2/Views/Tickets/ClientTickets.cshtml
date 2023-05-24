@@ -1,0 +1,27 @@
+﻿@model List<gestionticket_v2.Models.Ticket>
+
+<h2>Your Tickets</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <!-- Add more columns as needed for other Ticket properties -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <td>@ticket.Id</td>
+                <td>@ticket.Titre</td>
+                <td>@ticket.Description</td>
+                <!-- Add more cells as needed for other Ticket properties -->
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-primary" asp-controller="Tickets" asp-action="Create">Create New Ticket</a>
