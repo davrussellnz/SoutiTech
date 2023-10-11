@@ -22,23 +22,23 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Priorite)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Priorite.Nom)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Priorite.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Priorite.Nom)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Categorie)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Categorie.Nom)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Categorie.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Categorie.Nom)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Auteur)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Auteur.Id)
+            @Html.DisplayFor(model => model.Auteur.Nom)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Statut)
@@ -62,11 +62,11 @@
             @Html.DisplayNameFor(model => model.Assignee)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Assignee.Id)
+            @Html.DisplayFor(model => model.Assignee.Nom)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="TechnicianTickets">Back to List</a>
 </div>

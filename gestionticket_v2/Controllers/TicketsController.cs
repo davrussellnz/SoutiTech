@@ -49,9 +49,27 @@ namespace gestionticket_v2.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var tickets = await _context.Tickets.Where(t => t.AssigneeId == userIdString).ToListAsync();
+            // Get the tickets assigned to this technician
+            var tickets = _context.Tickets
+                .Include(t => t.Priorite)
+                .Include(t => t.Categorie)
+                .Where(t => t.AssigneeId == userIdString)
+                .ToList();
+
+            // Debugging: check if Priorite is null for any ticket
+            foreach (var ticket in tickets)
+            {
+                if (ticket.Priorite == null)
+                {
+                    // Log the ticket ID or other relevant information
+                    Console.WriteLine($"Ticket with ID {ticket.Id} has null Priorite");
+                }
+            }
+
+            // Pass tickets to the view...
             return View(tickets);
         }
+
 
 
 
@@ -97,16 +115,16 @@ namespace gestionticket_v2.Controllers
         // GET: Tickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Tickets == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var ticket = await _context.Tickets
-                .Include(t => t.Assignee)
-                .Include(t => t.Auteur)
-                .Include(t => t.Categorie)
                 .Include(t => t.Priorite)
+                .Include(t => t.Categorie)
+                .Include(t => t.Auteur)
+                .Include(t => t.Assignee)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
@@ -115,6 +133,7 @@ namespace gestionticket_v2.Controllers
 
             return View(ticket);
         }
+
 
         // GET: Tickets/Create
         public IActionResult Create()
@@ -149,14 +168,9 @@ namespace gestionticket_v2.Controllers
 
                 _context.Add(ticket);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ClientTickets");
             }
-       
-            // Populate select lists
-            ViewData["AssigneeId"] = new SelectList(_context.Set<MembreSupportTechnique>(), "Id", "Id", ticket.AssigneeId);
-            ViewData["AuteurId"] = new SelectList(_context.Set<Client>(), "Id", "Id", ticket.AuteurId);
-            ViewData["CategorieId"] = new SelectList(_context.Set<Categorie>(), "Id", "Id", ticket.CategorieId);
-            ViewData["PrioriteId"] = new SelectList(_context.Set<Priorite>(), "Id", "Id", ticket.PrioriteId);
+
 
             return View(ticket);
         }
@@ -207,15 +221,23 @@ namespace gestionticket_v2.Controllers
                 return NotFound();
             }
 
-            var ticket = await _context.Tickets.FindAsync(id);
+            var ticket = await _context.Tickets
+                .Include(t => t.Priorite)
+                .Include(t => t.Categorie)
+                .Include(t => t.Auteur)
+                .Include(t => t.Assignee)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
                 return NotFound();
             }
-            ViewData["AssigneeId"] = new SelectList(_context.Set<MembreSupportTechnique>(), "Id", "Id", ticket.AssigneeId);
-            ViewData["AuteurId"] = new SelectList(_context.Set<Client>(), "Id", "Id", ticket.AuteurId);
-            ViewData["CategorieId"] = new SelectList(_context.Set<Categorie>(), "Id", "Id", ticket.CategorieId);
-            ViewData["PrioriteId"] = new SelectList(_context.Set<Priorite>(), "Id", "Id", ticket.PrioriteId);
+            ViewBag.StatusList = new List<string> { "New", "In Progress", "Completed", "Closed" };
+            ViewBag.Priorite = new SelectList(_context.Priorite, "Id", "Nom");
+            ViewBag.Categorie = new SelectList(_context.Categorie, "Id", "Nom");
+            ViewBag.AssigneeId = new SelectList(_context.Set<MembreSupportTechnique>(), "Id", "Nom", ticket.AssigneeId);
+
+
+            
             return View(ticket);
         }
 
@@ -229,11 +251,9 @@ namespace gestionticket_v2.Controllers
             if (id != ticket.Id)
             {
                 return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+            }         
+            
+           try
                 {
                     _context.Update(ticket);
                     await _context.SaveChangesAsync();
@@ -250,13 +270,14 @@ namespace gestionticket_v2.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["AssigneeId"] = new SelectList(_context.Set<MembreSupportTechnique>(), "Id", "Id", ticket.AssigneeId);
-            ViewData["AuteurId"] = new SelectList(_context.Set<Client>(), "Id", "Id", ticket.AuteurId);
-            ViewData["CategorieId"] = new SelectList(_context.Set<Categorie>(), "Id", "Id", ticket.CategorieId);
-            ViewData["PrioriteId"] = new SelectList(_context.Set<Priorite>(), "Id", "Id", ticket.PrioriteId);
+           
+          
+
+            // Populate the status list again in case of validation errors
+            ViewBag.StatusList = new List<string> { "New", "In Progress", "Completed", "Closed" };
             return View(ticket);
         }
+
 
         // GET: Tickets/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -294,14 +315,14 @@ namespace gestionticket_v2.Controllers
             {
                 _context.Tickets.Remove(ticket);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TicketExists(int id)
         {
-          return (_context.Tickets?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Tickets?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -241,6 +241,9 @@ namespace gestionticket_v2.Migrations
                     b.Property<int>("CategorieId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ClientId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("DateCreation")
                         .HasColumnType("datetime2");
 
@@ -250,6 +253,9 @@ namespace gestionticket_v2.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MembreSupportTechniqueId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("PrioriteId")
                         .IsRequired()
@@ -270,6 +276,10 @@ namespace gestionticket_v2.Migrations
                     b.HasIndex("AuteurId");
 
                     b.HasIndex("CategorieId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("MembreSupportTechniqueId");
 
                     b.HasIndex("PrioriteId");
 
@@ -422,13 +432,13 @@ namespace gestionticket_v2.Migrations
 
             modelBuilder.Entity("gestionticket_v2.Models.Ticket", b =>
                 {
-                    b.HasOne("gestionticket_v2.Models.MembreSupportTechnique", "Assignee")
+                    b.HasOne("gestionticket_v2.Models.ApplicationUser", "Assignee")
                         .WithMany("TicketsAssignes")
                         .HasForeignKey("AssigneeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("gestionticket_v2.Models.Client", "Auteur")
+                    b.HasOne("gestionticket_v2.Models.ApplicationUser", "Auteur")
                         .WithMany("Tickets")
                         .HasForeignKey("AuteurId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -439,6 +449,14 @@ namespace gestionticket_v2.Migrations
                         .HasForeignKey("CategorieId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("gestionticket_v2.Models.Client", null)
+                        .WithMany("Tickets")
+                        .HasForeignKey("ClientId");
+
+                    b.HasOne("gestionticket_v2.Models.MembreSupportTechnique", null)
+                        .WithMany("TicketsAssignes")
+                        .HasForeignKey("MembreSupportTechniqueId");
 
                     b.HasOne("gestionticket_v2.Models.Priorite", "Priorite")
                         .WithMany("Tickets")
@@ -504,6 +522,13 @@ namespace gestionticket_v2.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("gestionticket_v2.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Tickets");
+
+                    b.Navigation("TicketsAssignes");
                 });
 
             modelBuilder.Entity("gestionticket_v2.Models.Categorie", b =>

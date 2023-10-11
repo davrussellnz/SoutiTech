@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
+
+
 namespace gestionticket_v2.Models
 {
+
+
 
     public class MembreSupportTechnique
     {

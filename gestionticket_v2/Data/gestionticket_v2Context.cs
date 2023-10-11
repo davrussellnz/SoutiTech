@@ -15,7 +15,15 @@ namespace gestionticket_v2.Data
         public DbSet<Categorie> Categorie { get; set; }
         public DbSet<Priorite> Priorite { get; set; }
         public DbSet<Statistiques> Statistiques { get; set; }
-        
+        //Clients
+        public DbSet<Client> Client { get; set; }
+
+        //Membres du support technique
+
+        public DbSet<MembreSupportTechnique> MembreSupportTechnique { get; set; }
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

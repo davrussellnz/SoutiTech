@@ -1,7 +1,10 @@
 ﻿using gestionticket_v2.Data;
 using gestionticket_v2.Models;
+using gestionticket_v2.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -50,6 +53,12 @@ using (var scope = scopeFactory.CreateScope())
         }
     }
 }
+
+
+app.MapControllerRoute(
+    name: "statistics",
+    pattern: "{controller=Statistics}/{action=Index}/{id?}");
+
 
 
 app.Run();

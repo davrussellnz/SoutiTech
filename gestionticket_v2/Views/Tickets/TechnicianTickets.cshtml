@@ -1,30 +1,30 @@
-﻿@model IEnumerable<gestionticket_v2.Models.Ticket>
-
-<h2>Technician Tickets</h2>
-
-<table class="table">
+﻿<table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Date Created</th>
-            <th>Date Modified</th>
-            <!-- Add more columns as needed -->
+            <th scope="col">Ticket ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Category</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var ticket in Model)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@ticket.Id</td>
-                <td>@ticket.Titre</td>
-                <td>@ticket.Description</td>
-                <td>@ticket.Statut</td>
-                <td>@ticket.DateCreation</td>
-                <td>@ticket.DateModification</td>
-                <!-- Add more fields as needed -->
+                <td>@item.Id</td>
+                <td>@item.Titre</td>
+                <td>@item.Description</td>
+                <td>@item.Priorite.Nom</td>
+                <td>@item.Categorie.Nom</td>
+                <td>@item.Statut</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
             </tr>
         }
     </tbody>

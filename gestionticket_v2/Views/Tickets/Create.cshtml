@@ -2,6 +2,34 @@
 
 <h2>Create Ticket</h2>
 
+<div class="form-group">
+    <label for="chatInput">Chat with our AI</label>
+    <input id="chatInput" class="form-control" />
+    <button id="chatSubmit" class="btn btn-primary">Send</button>
+</div>
+<div id="chatOutput" class="form-group">
+    <!-- The chatbot's responses will be inserted here -->
+</div>
+
+<script>
+    document.getElementById('chatSubmit').addEventListener('click', function () {
+        var input = document.getElementById('chatInput').value;
+        fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ input: input })
+        })
+            .then(response => response.json())
+            .then(data => {
+                var outputDiv = document.getElementById('chatOutput');
+                outputDiv.innerHTML += '<p><strong>You:</strong> ' + data.input + '</p>';
+                outputDiv.innerHTML += '<p><strong>AI:</strong> ' + data.output + '</p>';
+            });
+    });
+</script>
+
 <form asp-action="Create">
     <div class="form-group">
         <label asp-for="Titre"></label>

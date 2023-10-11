@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace gestionticket_v2.Migrations
 {
-    public partial class initial1 : Migration
+    public partial class Initial1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -238,11 +238,25 @@ namespace gestionticket_v2.Migrations
                     AssigneeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Statut = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModification = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateModification = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MembreSupportTechniqueId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tickets_AspNetUsers_AssigneeId",
+                        column: x => x.AssigneeId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tickets_AspNetUsers_AuteurId",
+                        column: x => x.AuteurId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Tickets_Categorie_CategorieId",
                         column: x => x.CategorieId,
@@ -250,17 +264,15 @@ namespace gestionticket_v2.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Tickets_Client_AuteurId",
-                        column: x => x.AuteurId,
+                        name: "FK_Tickets_Client_ClientId",
+                        column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Tickets_MembreSupportTechnique_AssigneeId",
-                        column: x => x.AssigneeId,
+                        name: "FK_Tickets_MembreSupportTechnique_MembreSupportTechniqueId",
+                        column: x => x.MembreSupportTechniqueId,
                         principalTable: "MembreSupportTechnique",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tickets_Priorite_PrioriteId",
                         column: x => x.PrioriteId,
@@ -352,6 +364,16 @@ namespace gestionticket_v2.Migrations
                 column: "CategorieId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tickets_ClientId",
+                table: "Tickets",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_MembreSupportTechniqueId",
+                table: "Tickets",
+                column: "MembreSupportTechniqueId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tickets_PrioriteId",
                 table: "Tickets",
                 column: "PrioriteId");
@@ -384,10 +406,10 @@ namespace gestionticket_v2.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "Tickets");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Categorie");

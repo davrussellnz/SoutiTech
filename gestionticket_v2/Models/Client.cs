@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Net.Sockets;
-
-namespace gestionticket_v2.Models
+﻿namespace gestionticket_v2.Models
 {
-    public class Client 
+    public class Client
     {
         public Client()
         {
@@ -13,8 +10,12 @@ namespace gestionticket_v2.Models
         public string Nom { get; set; }
         public string Prenom { get; set; }
 
+
+
         // Cette liste de tickets est maintenant optionnelle
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
+
+
 
 }

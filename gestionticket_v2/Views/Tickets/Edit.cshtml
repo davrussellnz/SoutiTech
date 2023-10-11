@@ -25,29 +25,30 @@
             </div>
             <div class="form-group">
                 <label asp-for="PrioriteId" class="control-label"></label>
-                <select asp-for="PrioriteId" class="form-control" asp-items="ViewBag.PrioriteId"></select>
+                <select asp-for="PrioriteId" class="form-control" asp-items="ViewBag.Priorite"></select>
                 <span asp-validation-for="PrioriteId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CategorieId" class="control-label"></label>
-                <select asp-for="CategorieId" class="form-control" asp-items="ViewBag.CategorieId"></select>
+                <select asp-for="CategorieId" class="form-control" asp-items="ViewBag.Categorie"></select>
                 <span asp-validation-for="CategorieId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AuteurId" class="control-label"></label>
-                <select asp-for="AuteurId" class="form-control" asp-items="ViewBag.AuteurId"></select>
-                <span asp-validation-for="AuteurId" class="text-danger"></span>
+                <label asp-for="Auteur.Nom" class="control-label"></label>
+                <input asp-for="Auteur.Nom" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="AssigneeId" class="control-label"></label>
                 <select asp-for="AssigneeId" class="form-control" asp-items="ViewBag.AssigneeId"></select>
-                <span asp-validation-for="AssigneeId" class="text-danger"></span>
             </div>
+
+         
+
             <div class="form-group">
                 <label asp-for="Statut" class="control-label"></label>
-                <input asp-for="Statut" class="form-control" />
-                <span asp-validation-for="Statut" class="text-danger"></span>
+                <select asp-for="Statut" class="form-control" asp-items="@(new SelectList(ViewBag.StatusList))"></select>
             </div>
+
             <div class="form-group">
                 <label asp-for="DateCreation" class="control-label"></label>
                 <input asp-for="DateCreation" class="form-control" />
@@ -66,7 +67,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="TechnicianTickets">Back to List</a>
 </div>
 
 @section Scripts {
