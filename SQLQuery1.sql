@@ -1,58 +1,40 @@
-﻿
-
-
 
 
 INSERT INTO Categorie (Nom)
 
 VALUES
 
-('Technical Issue'),
+('Problème technique'),
 
-( 'Billing Inquiry'),
+( 'Demande de facturation'),
 
-( 'Sales Question'),
+( 'Question de vente'),
 
-( 'Other'),
+( 'Autre'),
 
-('Feature Request'),
+('Demande de fonctionnalité'),
 
-( 'Bug Report'),
+( 'Rapport de bogue'),
 
-( 'Account Change'),
+( 'Modification de compte'),
 
-('Account Termination'),
+('Résiliation de compte'),
 
-( 'Account Creation'),
+( 'Création de compte'),
 
-( 'Account Billing'),
+( 'Facturation de compte'),
 
-( 'Account Login');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+( 'Connexion de compte');
 
 
 
 INSERT INTO Priorite (Nom, Niveau)
 
-VALUES ('High', 3),
+VALUES ('Élevé', 3),
 
-       ('Medium', 2),
+       ('Moyen', 2),
 
-       ('Low', 1);
+       ('Faible', 1);
 
 
 
